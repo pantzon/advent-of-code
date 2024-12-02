@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"helpers/io"
+	"helpers"
 	"strconv"
 	"strings"
 )
@@ -33,7 +33,7 @@ func main() {
 		return ""
 	}
 
-	if _, err := io.ReadAndParseFile(io.ReadFileOptions[string]{
+	if _, err := helpers.ReadAndParseFile(helpers.ReadFileOptions[string]{
 		Path:   *pathPtr,
 		Parser: parser,
 	}); err != nil {

@@ -4,8 +4,7 @@ import (
 	"container/heap"
 	"flag"
 	"fmt"
-	"helpers/collections"
-	"helpers/io"
+	"helpers"
 	"strconv"
 	"strings"
 )
@@ -14,9 +13,9 @@ func main() {
 	pathPtr := flag.String("path", "", "")
 	flag.Parse()
 
-	left := &collections.Heap[int]{}
+	left := &helpers.Heap[int]{}
 	heap.Init(left)
-	right := &collections.Heap[int]{}
+	right := &helpers.Heap[int]{}
 	heap.Init(right)
 
 	parser := func(line string) string {
@@ -41,7 +40,7 @@ func main() {
 		return ""
 	}
 
-	if _, err := io.ReadAndParseFile(io.ReadFileOptions[string]{
+	if _, err := helpers.ReadAndParseFile(helpers.ReadFileOptions[string]{
 		Path:   *pathPtr,
 		Parser: parser,
 	}); err != nil {
