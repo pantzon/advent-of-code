@@ -1,12 +1,22 @@
-package main
+package days
 
 import (
+	"aoc/helpers"
 	"fmt"
-	"helpers"
+	"path/filepath"
 	"strings"
 )
 
-func parser(line string) bool {
+func d2P1Parser(line string) bool {
+	if len(line) == 0 {
+		return false
+	}
+
+	levels := strings.Split(line, " ")
+	return checkLevels(levels)
+}
+
+func d2P2Parser(line string) bool {
 	if len(line) == 0 {
 		return false
 	}
@@ -54,12 +64,10 @@ func checkDiff(first, second string) (bool, bool) {
 	return false, false
 }
 
-func main() {
-	flags := helpers.PrepCommonFlags()
-
+func d2Part1(path string) {
 	reports, err := helpers.ReadAndParseFile(helpers.ReadFileOptions[bool]{
-		Path:   *(flags.Path),
-		Parser: parser,
+		Path:   path,
+		Parser: d2P1Parser,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -74,4 +82,35 @@ func main() {
 	}
 
 	fmt.Printf("Total safe reports: %d\n", safeReports)
+}
+
+func d2Part2(path string) {
+	reports, err := helpers.ReadAndParseFile(helpers.ReadFileOptions[bool]{
+		Path:   path,
+		Parser: d2P2Parser,
+	})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	safeReports := 0
+	for _, safe := range reports {
+		if safe {
+			safeReports++
+		}
+	}
+
+	fmt.Printf("Total safe reports: %d\n", safeReports)
+}
+
+func Day2() {
+	inputFile, err := filepath.Abs("./inputs/day2.txt")
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("Day 2")
+	d2Part1(inputFile)
+	d2Part2(inputFile)
 }
