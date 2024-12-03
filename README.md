@@ -1,6 +1,15 @@
 # advent-of-code
-Advent of Code solutions, starting in 2024
+
+Advent of Code solutions
 
 ## 2024
 
-Going to aim to do all of them using Go this year.
+[Go go gadget, Golang!](2024)
+
+## 2020
+
+[Python (s-s-s-s-s-s-snake s-s-style!)](2020)
+
+## 2015
+
+[TypeScript, the best script.](2015)
