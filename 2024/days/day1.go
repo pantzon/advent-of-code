@@ -38,7 +38,7 @@ func d1Part1(path string) {
 		return ""
 	}
 
-	if _, err := helpers.ReadAndParseFile(helpers.ReadFileOptions[string]{
+	if _, err := helpers.ParseFile(helpers.ParseFileOptions[string]{
 		Path:   path,
 		Parser: parser,
 	}); err != nil {
@@ -80,7 +80,7 @@ func d1Part2(path string) {
 		return ""
 	}
 
-	if _, err := helpers.ReadAndParseFile(helpers.ReadFileOptions[string]{
+	if _, err := helpers.ParseFile(helpers.ParseFileOptions[string]{
 		Path:   path,
 		Parser: parser,
 	}); err != nil {

@@ -6,37 +6,53 @@ import (
 	"path/filepath"
 )
 
-type ReadFileOptions[O any] struct {
+type ParseFileOptions[O any] struct {
 	Path   string
 	Parser func(line string) O
 }
 
+type ReduceFileOptions[O any] struct {
+	Path         string
+	Reducer      func(acc O, line string) O
+	InitialValue O
+}
+
 func ReadFile(path string) ([]string, error) {
-	return ReadAndParseFile(ReadFileOptions[string]{
+	return ParseFile(ParseFileOptions[string]{
 		Path:   path,
 		Parser: func(line string) string { return line },
 	})
 }
 
-func ReadAndParseFile[O any](opts ReadFileOptions[O]) ([]O, error) {
+func ParseFile[O any](opts ParseFileOptions[O]) ([]O, error) {
+	reducer := func(acc []O, line string) []O {
+		return append(acc, opts.Parser(line))
+	}
+	return ReduceFile(ReduceFileOptions[[]O]{
+		Path:    opts.Path,
+		Reducer: reducer,
+	})
+}
+
+func ReduceFile[O any](opts ReduceFileOptions[O]) (O, error) {
+	acc := opts.InitialValue
 	path, err := filepath.Abs(opts.Path)
 	if err != nil {
-		return nil, err
+		return acc, err
 	}
 	file, err := os.Open(path)
 	if err != nil {
-		return nil, err
+		return acc, err
 	}
 	defer file.Close()
 
-	var data []O
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		data = append(data, opts.Parser(scanner.Text()))
+		acc = opts.Reducer(acc, scanner.Text())
 	}
 
 	if err := scanner.Err(); err != nil {
-		return nil, err
+		return acc, err
 	}
-	return data, nil
+	return acc, nil
 }

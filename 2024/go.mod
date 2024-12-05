@@ -1,6 +1,6 @@
 module aoc2024
 
-go 1.22.7
+go 1.23.4
 
 replace aoc => ../go
 
