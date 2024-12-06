@@ -14,12 +14,12 @@ type Page struct {
 	Children map[string]*Page
 }
 
-type Data struct {
+type D5Data struct {
 	Pages     map[string]*Page
 	PrintSets [][]*Page
 }
 
-func getOrMakePage(data Data, id string) *Page {
+func getOrMakePage(data D5Data, id string) *Page {
 	if _, ok := data.Pages[id]; !ok {
 		data.Pages[id] = &Page{
 			Id:       id,
@@ -30,8 +30,8 @@ func getOrMakePage(data Data, id string) *Page {
 	return data.Pages[id]
 }
 
-func getData(path string) *Data {
-	reducer := func(acc Data, line string) Data {
+func getD5Data(path string) *D5Data {
+	reducer := func(acc D5Data, line string) D5Data {
 		if strings.Contains(line, "|") {
 			pieces := strings.Split(line, "|")
 			if len(pieces) != 2 {
@@ -55,10 +55,10 @@ func getData(path string) *Data {
 		}
 		return acc
 	}
-	data, err := helpers.ReduceFile(helpers.ReduceFileOptions[Data]{
+	data, err := helpers.ReduceFile(helpers.ReduceFileOptions[D5Data]{
 		Path:    path,
 		Reducer: reducer,
-		InitialValue: Data{
+		InitialValue: D5Data{
 			Pages: map[string]*Page{},
 		},
 	})
@@ -91,7 +91,7 @@ func comparePages(a, b *Page) int {
 	return 0
 }
 
-func splitPrintSets(data *Data) ([][]*Page, [][]*Page) {
+func splitPrintSets(data *D5Data) ([][]*Page, [][]*Page) {
 	var valids [][]*Page
 	var invalids [][]*Page
 
@@ -106,7 +106,7 @@ func splitPrintSets(data *Data) ([][]*Page, [][]*Page) {
 }
 
 func d5Part1(path string) {
-	valids, _ := splitPrintSets(getData(path))
+	valids, _ := splitPrintSets(getD5Data(path))
 
 	midSums := 0
 	for _, printSet := range valids {
@@ -116,7 +116,7 @@ func d5Part1(path string) {
 }
 
 func d5Part2(path string) {
-	data := getData(path)
+	data := getD5Data(path)
 	_, invalids := splitPrintSets(data)
 
 	midSums := 0
