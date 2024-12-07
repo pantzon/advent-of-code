@@ -10,11 +10,11 @@ data = set(
 
 
 def Part1():
-    print("Max Seat: {}".format(max(*data)))
+    print("Max Seat: {}".format(max(data)))
 
 
 def Part2():
-    for i in range(min(*data) + 1, max(*data)):
+    for i in range(min(data) + 1, max(data)):
         if i not in data:
             print("My Seat: {}".format(i))
             break

@@ -1,0 +1,92 @@
+<html>
+  <body>
+    <canvas id="canvas1" height="1000" width="1000"></canvas>
+    <canvas id="canvas2" height="1000" width="1000"></canvas>
+    <script type="module">
+      const data = `!PASTE INPUT DATA HERE!`;
+      const canvas1 = document
+        .getElementById("canvas1")
+        .getContext("2d", { alpha: false });
+      const canvas2 = document
+        .getElementById("canvas2")
+        .getContext("2d", { alpha: false });
+
+      const instructionRe =
+        /^(?<cmd>turn on|turn off|toggle) (?<sX>[0-9]+),(?<sY>[0-9]+) through (?<eX>[0-9]+),(?<eY>[0-9]+)$/;
+      function process(data) {
+        const p1Lights = new Array(1_000_000).fill(false);
+        const p2Lights = new Array(1_000_000).fill(0);
+        for (const line of data.split("\n")) {
+          const match = instructionRe.exec(line);
+          if (match && match.groups) {
+            for (
+              let x = parseInt(match.groups["sX"]);
+              x <= parseInt(match.groups["eX"]);
+              x++
+            ) {
+              for (
+                let y = parseInt(match.groups["sY"]);
+                y <= parseInt(match.groups["eY"]);
+                y++
+              ) {
+                const i = x * 1000 + y;
+                switch (match.groups["cmd"]) {
+                  case "turn on":
+                    p1Lights[i] = true;
+                    p2Lights[i] += 1;
+                    break;
+                  case "turn off":
+                    p1Lights[i] = false;
+                    if (p2Lights[i] > 0) {
+                      p2Lights[i] -= 1;
+                    }
+                    break;
+                  case "toggle":
+                    p1Lights[i] = !p1Lights[i];
+                    p2Lights[i] += 2;
+                    break;
+                  default:
+                    console.log(`Unknown Command! ${line}`);
+                }
+              }
+            }
+          } else {
+            console.log("Bad line: " + line);
+          }
+        }
+
+        const p1ImageData = new Uint8ClampedArray(4_000_000);
+        for (let i = 0; i < p1Lights.length; i++) {
+          p1ImageData[i * 4 + 0] = p1Lights[i] ? 255 : 0;
+          p1ImageData[i * 4 + 1] = p1Lights[i] ? 255 : 0;
+          p1ImageData[i * 4 + 2] = p1Lights[i] ? 255 : 0;
+          p1ImageData[i * 4 + 3] = 255;
+        }
+        canvas1.putImageData(new ImageData(p1ImageData, 1000, 1000), 0, 0);
+
+        const p2ImageData = new Uint8ClampedArray(4_000_000);
+        for (let i = 0; i < p2Lights.length; i++) {
+          p2ImageData[i * 4 + 0] = p2Lights[i] * 4;
+          p2ImageData[i * 4 + 1] = p2Lights[i] * 4;
+          p2ImageData[i * 4 + 2] = p2Lights[i] * 4;
+          p2ImageData[i * 4 + 3] = 255;
+        }
+        canvas2.putImageData(new ImageData(p2ImageData, 1000, 1000), 0, 0);
+
+        return [p1Lights, p2Lights];
+      }
+      const [p1, p2] = process(data);
+      function part1() {
+        const lit = p1.reduce((acc, v) => (v ? acc + 1 : acc), 0);
+        console.log(`Lights Lit: ${lit}`);
+      }
+      function part2() {
+        const brightness = p2.reduce((acc, v) => acc + v, 0);
+        console.log(`Lights Brightness: ${brightness}`);
+      }
+      console.log("DAY 6");
+      part1();
+      part2();
+    </script>
+  </body>
+</html>
