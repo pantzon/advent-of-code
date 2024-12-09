@@ -19,7 +19,7 @@ func checkXmas(data []string, x int, y int, xDiff int, yDiff int) int {
 }
 
 func d4Part1(path string) {
-	wordSearch, err := helpers.ReadFile(path)
+	wordSearch, err := helpers.ParseFileToLines(path)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -55,7 +55,7 @@ func checkXMas(data []string, x int, y int) int {
 }
 
 func d4Part2(path string) {
-	wordSearch, err := helpers.ReadFile(path)
+	wordSearch, err := helpers.ParseFileToLines(path)
 	if err != nil {
 		fmt.Println(err)
 		return

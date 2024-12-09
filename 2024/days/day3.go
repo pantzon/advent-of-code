@@ -9,7 +9,7 @@ import (
 )
 
 func d3Part1(path string) {
-	instructions, err := helpers.ReadFile(path)
+	instructions, err := helpers.ParseFileToLines(path)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -28,7 +28,7 @@ func d3Part1(path string) {
 }
 
 func d3Part2(path string) {
-	instructions, err := helpers.ReadFile(path)
+	instructions, err := helpers.ParseFileToLines(path)
 	if err != nil {
 		fmt.Println(err)
 		return

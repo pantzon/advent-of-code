@@ -51,7 +51,7 @@ func d9Part1(path string) {
 	if err != nil {
 		panic(err)
 	}
-	_, checksum := P1ReworkMemory(MakeMemory(data[0]))
+	_, checksum := P1ReworkMemory(MakeMemory(data))
 	fmt.Printf("Checksum: %d\n", checksum)
 }
 
@@ -105,12 +105,12 @@ func d9Part2(path string) {
 	if err != nil {
 		panic(err)
 	}
-	_, checksum := P2ReworkMemory(MakeMemory(data[0]))
+	_, checksum := P2ReworkMemory(MakeMemory(data))
 	fmt.Printf("Checksum: %d\n", checksum)
 }
 
 func Day9() {
-	inputFile, err := filepath.Abs("./inputs/day9.txt")
+	inputFile, err := filepath.Abs("./inputs/day9example.txt")
 	if err != nil {
 		panic(err)
 	}

@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 type ParseFileOptions[O any] struct {
@@ -17,11 +18,12 @@ type ReduceFileOptions[O any] struct {
 	InitialValue O
 }
 
-func ReadFile(path string) ([]string, error) {
-	return ParseFile(ParseFileOptions[string]{
-		Path:   path,
-		Parser: func(line string) string { return line },
-	})
+func ReadFile(path string) (string, error) {
+	if out, err := ParseFileToLines(path); err == nil {
+		return strings.Join(out, "\n"), nil
+	} else {
+		return "", err
+	}
 }
 
 func ParseFile[O any](opts ParseFileOptions[O]) ([]O, error) {
@@ -31,6 +33,13 @@ func ParseFile[O any](opts ParseFileOptions[O]) ([]O, error) {
 	return ReduceFile(ReduceFileOptions[[]O]{
 		Path:    opts.Path,
 		Reducer: reducer,
+	})
+}
+
+func ParseFileToLines(path string) ([]string, error) {
+	return ParseFile(ParseFileOptions[string]{
+		Path:   path,
+		Parser: func(line string) string { return line },
 	})
 }
 
