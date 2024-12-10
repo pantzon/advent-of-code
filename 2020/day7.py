@@ -39,7 +39,7 @@ def GetBagHolders(color: str, holders: set[str]):
         GetBagHolders(k, holders)
 
 
-def Part1():
+def Part1() -> None:
     all_shiny_holders = set[str]()
     if "shiny gold" not in bag_holdings:
         all_shiny_holders.add("shiny gold")
@@ -54,11 +54,11 @@ def GetBagsHeld(color: str) -> int:
     return total
 
 
-def Part2():
+def Part2() -> None:
     print("Bags in Shiny Gold: {}".format(GetBagsHeld("shiny gold")))
 
 
-def main():
+def main() -> None:
     print("Day 7")
     Part1()
     Part2()

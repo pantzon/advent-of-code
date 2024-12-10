@@ -9,18 +9,18 @@ data = set(
 )
 
 
-def Part1():
+def Part1() -> None:
     print("Max Seat: {}".format(max(data)))
 
 
-def Part2():
+def Part2() -> None:
     for i in range(min(data) + 1, max(data)):
         if i not in data:
             print("My Seat: {}".format(i))
             break
 
 
-def main():
+def main() -> None:
     print("Day 5")
     Part1()
     Part2()

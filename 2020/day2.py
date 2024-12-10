@@ -31,7 +31,7 @@ for line in data.split("\n"):
     pols_and_pswds.append((Policy(minimum, maximum, char), pswd))
 
 
-def Part1():
+def Part1() -> None:
     print(
         "Valid Sled Count: {}".format(
             sum(pol.validateSledPolicy(pswd) for pol, pswd in pols_and_pswds)
@@ -39,7 +39,7 @@ def Part1():
     )
 
 
-def Part2():
+def Part2() -> None:
     print(
         "Valid Toboggan Count: {}".format(
             sum(pol.validateTobogganPolicy(pswd) for pol, pswd in pols_and_pswds)
@@ -47,7 +47,7 @@ def Part2():
     )
 
 
-def main():
+def main() -> None:
     print("Day 2")
     Part1()
     Part2()

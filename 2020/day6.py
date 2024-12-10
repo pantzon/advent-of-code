@@ -12,7 +12,7 @@ for l in data.split("\n"):
         current = set()
 
 
-def Part1():
+def Part1() -> None:
     print("Any Yes: {}".format(sum(len(s) for s in any_groups)))
 
 
@@ -26,11 +26,11 @@ for l in data.split("\n"):
         current = []
 
 
-def Part2():
+def Part2() -> None:
     print("Every Yes: {}".format(sum(len(s) for s in every_groups)))
 
 
-def main():
+def main() -> None:
     print("Day 6")
     Part1()
     Part2()

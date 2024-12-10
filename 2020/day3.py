@@ -16,11 +16,11 @@ def Traverse(y: int, x: int):
     return trees
 
 
-def Part1():
+def Part1() -> None:
     print("Trees Encountered: {}".format(Traverse(1, 3)))
 
 
-def Part2():
+def Part2() -> None:
     print(
         "Multiplied Trees: {}".format(
             Traverse(1, 1)
@@ -32,7 +32,7 @@ def Part2():
     )
 
 
-def main():
+def main() -> None:
     print("Day 3")
     Part1()
     Part2()

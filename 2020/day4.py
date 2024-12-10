@@ -17,7 +17,7 @@ IDS = {
 VALID = math.pow(2, 7) - 1
 
 
-def Part1():
+def Part1() -> None:
     total = 0
     for passport in data.split("\n\n"):
         passport_mask = 0
@@ -60,7 +60,7 @@ def CheckField(field: str, val: str):
     return False
 
 
-def Part2():
+def Part2() -> None:
     total = 0
     for passport in data.split("\n\n"):
         passport_mask = 0
@@ -75,7 +75,7 @@ def Part2():
     print("Valid passports: {}".format(total))
 
 
-def main():
+def main() -> None:
     print("Day 4")
     Part1()
     Part2()
