@@ -1,7 +1,7 @@
 package days
 
 import (
-	"aoc/helpers"
+	h "aoc/helpers"
 	"fmt"
 	"path/filepath"
 	"slices"
@@ -11,7 +11,7 @@ func MakeMemory(diskMap string) []int {
 	var memory []int
 	id := 0
 	for i, s := range diskMap {
-		size := helpers.ParseInt(string(s))
+		size := h.ParseInt(string(s))
 		val := -1
 		if i%2 == 0 {
 			val = id
@@ -47,7 +47,7 @@ func P1ReworkMemory(memory []int) ([]int, int) {
 }
 
 func d9Part1(path string) {
-	data, err := helpers.ReadFile(path)
+	data, err := h.ReadFile(path)
 	if err != nil {
 		panic(err)
 	}
@@ -101,7 +101,7 @@ func P2ReworkMemory(memory []int) ([]int, int) {
 }
 
 func d9Part2(path string) {
-	data, err := helpers.ReadFile(path)
+	data, err := h.ReadFile(path)
 	if err != nil {
 		panic(err)
 	}

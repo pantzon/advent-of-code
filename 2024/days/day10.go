@@ -1,7 +1,7 @@
 package days
 
 import (
-	"aoc/helpers"
+	h "aoc/helpers"
 	"fmt"
 	"path/filepath"
 )
@@ -16,28 +16,28 @@ func reducer(acc D10Map, line string) D10Map {
 	return append(acc, arr)
 }
 
-func p(x, y int) Point {
-	return Point{X: x, Y: y}
+func p(x, y int) h.Point {
+	return h.Point{X: x, Y: y}
 }
 
 type TrailDesignation struct {
 	Rating int
-	Ends   map[Point]bool
+	Ends   map[h.Point]bool
 }
 
-func trailsFromHead(x int, y int, m D10Map, mem map[Point]TrailDesignation) TrailDesignation {
+func trailsFromHead(x int, y int, m D10Map, mem map[h.Point]TrailDesignation) TrailDesignation {
 	if res, ok := mem[p(x, y)]; ok {
 		return res
 	}
 	result := TrailDesignation{
 		Rating: 0,
-		Ends:   map[Point]bool{},
+		Ends:   map[h.Point]bool{},
 	}
 	if m[y][x] == '9' {
 		result.Rating = 1
 		result.Ends[p(x, y)] = true
 	} else {
-		diffs := [4]Point{p(-1, 0), p(1, 0), p(0, -1), p(0, 1)}
+		diffs := [4]h.Point{p(-1, 0), p(1, 0), p(0, -1), p(0, 1)}
 		for _, dP := range diffs {
 			newY := y + dP.Y
 			if 0 <= newY && newY < len(m) {
@@ -59,7 +59,7 @@ func trailsFromHead(x int, y int, m D10Map, mem map[Point]TrailDesignation) Trai
 }
 
 func d10Part1(path string) {
-	m, err := helpers.ReduceFile(helpers.ReduceFileOptions[D10Map]{
+	m, err := h.ReduceFile(h.ReduceFileOptions[D10Map]{
 		Path:    path,
 		Reducer: reducer,
 	})
@@ -71,7 +71,7 @@ func d10Part1(path string) {
 	for y, r := range m {
 		for x, c := range r {
 			if c == '0' {
-				total += len(trailsFromHead(x, y, m, map[Point]TrailDesignation{}).Ends)
+				total += len(trailsFromHead(x, y, m, map[h.Point]TrailDesignation{}).Ends)
 			}
 		}
 	}
@@ -79,7 +79,7 @@ func d10Part1(path string) {
 }
 
 func d10Part2(path string) {
-	m, err := helpers.ReduceFile(helpers.ReduceFileOptions[D10Map]{
+	m, err := h.ReduceFile(h.ReduceFileOptions[D10Map]{
 		Path:    path,
 		Reducer: reducer,
 	})
@@ -91,7 +91,7 @@ func d10Part2(path string) {
 	for y, r := range m {
 		for x, c := range r {
 			if c == '0' {
-				total += trailsFromHead(x, y, m, map[Point]TrailDesignation{}).Rating
+				total += trailsFromHead(x, y, m, map[h.Point]TrailDesignation{}).Rating
 			}
 		}
 	}

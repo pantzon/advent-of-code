@@ -1,7 +1,7 @@
 package days
 
 import (
-	"aoc/helpers"
+	h "aoc/helpers"
 	"fmt"
 	"path/filepath"
 	"slices"
@@ -23,7 +23,7 @@ func getD6Data(path string) *D6Data {
 		acc.Area = append(acc.Area, []rune(line))
 		return acc
 	}
-	data, err := helpers.ReduceFile(helpers.ReduceFileOptions[D6Data]{
+	data, err := h.ReduceFile(h.ReduceFileOptions[D6Data]{
 		Path:         path,
 		Reducer:      reducer,
 		InitialValue: D6Data{},
@@ -63,16 +63,16 @@ func turn(dir GuardDirection) GuardDirection {
 	return (dir + 1) % 4
 }
 
-func guardTravel(data *D6Data) (map[helpers.Point][]GuardDirection, bool) {
-	visited := map[helpers.Point][]GuardDirection{}
+func guardTravel(data *D6Data) (map[h.Point][]GuardDirection, bool) {
+	visited := map[h.Point][]GuardDirection{}
 	guardX := data.StartX
 	guardY := data.StartY
 	direction := Up
 	for inRange := true; inRange; {
-		if slices.Contains(visited[helpers.Point{X: guardX, Y: guardY}], direction) {
+		if slices.Contains(visited[h.Point{X: guardX, Y: guardY}], direction) {
 			return visited, false
 		}
-		visited[helpers.Point{X: guardX, Y: guardY}] = append(visited[helpers.Point{X: guardX, Y: guardY}], direction)
+		visited[h.Point{X: guardX, Y: guardY}] = append(visited[h.Point{X: guardX, Y: guardY}], direction)
 		for {
 			newX, newY := nextPos(direction, guardX, guardY)
 			inRange = 0 <= newY && newY < len(data.Area) &&

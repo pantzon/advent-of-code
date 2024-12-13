@@ -1,7 +1,7 @@
 package days
 
 import (
-	"aoc/helpers"
+	h "aoc/helpers"
 	"fmt"
 	"math"
 	"path/filepath"
@@ -9,13 +9,13 @@ import (
 )
 
 func d11ParseData(path string) []int {
-	data, err := helpers.ReadFile(path)
+	data, err := h.ReadFile(path)
 	if err != nil {
 		panic(err)
 	}
 	var out []int
 	for _, i := range strings.Split(data, " ") {
-		out = append(out, helpers.ParseInt(i))
+		out = append(out, h.ParseInt(i))
 	}
 	return out
 }

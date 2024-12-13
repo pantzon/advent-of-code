@@ -1,7 +1,7 @@
 package days
 
 import (
-	"aoc/helpers"
+	h "aoc/helpers"
 	"fmt"
 	"path/filepath"
 	"slices"
@@ -55,7 +55,7 @@ func getD5Data(path string) *D5Data {
 		}
 		return acc
 	}
-	data, err := helpers.ReduceFile(helpers.ReduceFileOptions[D5Data]{
+	data, err := h.ReduceFile(h.ReduceFileOptions[D5Data]{
 		Path:    path,
 		Reducer: reducer,
 		InitialValue: D5Data{
@@ -110,7 +110,7 @@ func d5Part1(path string) {
 
 	midSums := 0
 	for _, printSet := range valids {
-		midSums += helpers.ParseInt(printSet[(len(printSet)-1)/2].Id)
+		midSums += h.ParseInt(printSet[(len(printSet)-1)/2].Id)
 	}
 	fmt.Printf("Sum of Valid Middles: %d\n", midSums)
 }
@@ -122,7 +122,7 @@ func d5Part2(path string) {
 	midSums := 0
 	for _, printSet := range invalids {
 		slices.SortFunc(printSet, comparePages)
-		midSums += helpers.ParseInt(printSet[(len(printSet)-1)/2].Id)
+		midSums += h.ParseInt(printSet[(len(printSet)-1)/2].Id)
 	}
 	fmt.Printf("Sum of Fixed Middles: %d\n", midSums)
 }

@@ -1,15 +1,14 @@
 package days
 
 import (
+	h "aoc/helpers"
 	"fmt"
 	"path/filepath"
 	"regexp"
-
-	"aoc/helpers"
 )
 
 func d3Part1(path string) {
-	instructions, err := helpers.ParseFileToLines(path)
+	instructions, err := h.ParseFileToLines(path)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -20,7 +19,7 @@ func d3Part1(path string) {
 	total := 0
 	for _, line := range instructions {
 		for _, match := range re.FindAllStringSubmatch(line, -1) {
-			total += helpers.ParseInt(match[1]) * helpers.ParseInt(match[2])
+			total += h.ParseInt(match[1]) * h.ParseInt(match[2])
 		}
 	}
 
@@ -28,7 +27,7 @@ func d3Part1(path string) {
 }
 
 func d3Part2(path string) {
-	instructions, err := helpers.ParseFileToLines(path)
+	instructions, err := h.ParseFileToLines(path)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -45,7 +44,7 @@ func d3Part2(path string) {
 			} else if match[0] == "don't()" {
 				enabled = false
 			} else if enabled {
-				total += helpers.ParseInt(match[1]) * helpers.ParseInt(match[2])
+				total += h.ParseInt(match[1]) * h.ParseInt(match[2])
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 package days
 
 import (
-	"aoc/helpers"
+	h "aoc/helpers"
 	"fmt"
 	"path/filepath"
 	"strings"
@@ -55,7 +55,7 @@ func checkLevels(levels []string) bool {
 }
 
 func checkDiff(first, second string) (bool, bool) {
-	diff := helpers.ParseInt(second) - helpers.ParseInt(first)
+	diff := h.ParseInt(second) - h.ParseInt(first)
 	if 0 < diff && diff < 4 {
 		return true, true
 	} else if -4 < diff && diff < 0 {
@@ -65,7 +65,7 @@ func checkDiff(first, second string) (bool, bool) {
 }
 
 func d2Part1(path string) {
-	reports, err := helpers.ParseFile(helpers.ParseFileOptions[bool]{
+	reports, err := h.ParseFile(h.ParseFileOptions[bool]{
 		Path:   path,
 		Parser: d2P1Parser,
 	})
@@ -85,7 +85,7 @@ func d2Part1(path string) {
 }
 
 func d2Part2(path string) {
-	reports, err := helpers.ParseFile(helpers.ParseFileOptions[bool]{
+	reports, err := h.ParseFile(h.ParseFileOptions[bool]{
 		Path:   path,
 		Parser: d2P2Parser,
 	})

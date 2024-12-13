@@ -1,19 +1,18 @@
 package days
 
 import (
+	h "aoc/helpers"
 	"container/heap"
 	"fmt"
 	"path/filepath"
 	"strconv"
 	"strings"
-
-	"aoc/helpers"
 )
 
 func d1Part1(path string) {
-	left := &helpers.Heap[int]{}
+	left := &h.Heap[int]{}
 	heap.Init(left)
-	right := &helpers.Heap[int]{}
+	right := &h.Heap[int]{}
 	heap.Init(right)
 
 	parser := func(line string) string {
@@ -38,7 +37,7 @@ func d1Part1(path string) {
 		return ""
 	}
 
-	if _, err := helpers.ParseFile(helpers.ParseFileOptions[string]{
+	if _, err := h.ParseFile(h.ParseFileOptions[string]{
 		Path:   path,
 		Parser: parser,
 	}); err != nil {
@@ -80,7 +79,7 @@ func d1Part2(path string) {
 		return ""
 	}
 
-	if _, err := helpers.ParseFile(helpers.ParseFileOptions[string]{
+	if _, err := h.ParseFile(h.ParseFileOptions[string]{
 		Path:   path,
 		Parser: parser,
 	}); err != nil {

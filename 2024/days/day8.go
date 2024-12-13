@@ -1,57 +1,49 @@
 package days
 
 import (
-	"aoc/helpers"
+	h "aoc/helpers"
 	"fmt"
 	"path/filepath"
 )
 
-type Point struct {
-	X, Y int
-}
-
-func (p Point) InMap(width, height int) bool {
-	return 0 <= p.X && p.X < width && 0 <= p.Y && p.Y < height
-}
-
 type D8Map struct {
-	Antennas map[rune][]Point
+	Antennas map[rune][]h.Point
 	Width    int
 	Height   int
 }
 
 func d8Process(path string) D8Map {
-	mapData, _ := helpers.ReduceFile(helpers.ReduceFileOptions[D8Map]{
+	mapData, _ := h.ReduceFile(h.ReduceFileOptions[D8Map]{
 		Path: path,
 		Reducer: func(acc D8Map, v string) D8Map {
 			for i, c := range v {
 				if c != '.' {
-					acc.Antennas[c] = append(acc.Antennas[c], Point{X: i, Y: acc.Height})
+					acc.Antennas[c] = append(acc.Antennas[c], h.Point{X: i, Y: acc.Height})
 				}
 			}
 			acc.Width = len(v)
 			acc.Height += 1
 			return acc
 		},
-		InitialValue: D8Map{Antennas: map[rune][]Point{}, Width: 0, Height: 0},
+		InitialValue: D8Map{Antennas: map[rune][]h.Point{}, Width: 0, Height: 0},
 	})
 	return mapData
 }
 
 func d8Part1(path string) {
 	mapData := d8Process(path)
-	spots := map[Point]bool{}
+	spots := map[h.Point]bool{}
 	for _, a := range mapData.Antennas {
 		for i, p1 := range a {
 			for _, p2 := range a[i+1:] {
 				xDiff := p2.X - p1.X
 				yDiff := p2.Y - p1.Y
-				overlap1 := Point{X: p1.X - xDiff, Y: p1.Y - yDiff}
-				if overlap1.InMap(mapData.Width, mapData.Height) {
+				overlap1 := h.Point{X: p1.X - xDiff, Y: p1.Y - yDiff}
+				if overlap1.InBounds(mapData.Width, mapData.Height) {
 					spots[overlap1] = true
 				}
-				overlap2 := Point{X: p2.X + xDiff, Y: p2.Y + yDiff}
-				if overlap2.InMap(mapData.Width, mapData.Height) {
+				overlap2 := h.Point{X: p2.X + xDiff, Y: p2.Y + yDiff}
+				if overlap2.InBounds(mapData.Width, mapData.Height) {
 					spots[overlap2] = true
 				}
 			}
@@ -62,7 +54,7 @@ func d8Part1(path string) {
 
 func d8Part2(path string) {
 	mapData := d8Process(path)
-	spots := map[Point]bool{}
+	spots := map[h.Point]bool{}
 	for _, a := range mapData.Antennas {
 		for i, p1 := range a {
 			if len(a) != 1 {
@@ -71,15 +63,15 @@ func d8Part2(path string) {
 			for _, p2 := range a[i+1:] {
 				xDiff := p2.X - p1.X
 				yDiff := p2.Y - p1.Y
-				overlap := Point{X: p1.X - xDiff, Y: p1.Y - yDiff}
-				for overlap.InMap(mapData.Width, mapData.Height) {
+				overlap := h.Point{X: p1.X - xDiff, Y: p1.Y - yDiff}
+				for overlap.InBounds(mapData.Width, mapData.Height) {
 					spots[overlap] = true
-					overlap = Point{X: overlap.X - xDiff, Y: overlap.Y - yDiff}
+					overlap = h.Point{X: overlap.X - xDiff, Y: overlap.Y - yDiff}
 				}
-				overlap = Point{X: p2.X + xDiff, Y: p2.Y + yDiff}
-				for overlap.InMap(mapData.Width, mapData.Height) {
+				overlap = h.Point{X: p2.X + xDiff, Y: p2.Y + yDiff}
+				for overlap.InBounds(mapData.Width, mapData.Height) {
 					spots[overlap] = true
-					overlap = Point{X: overlap.X + xDiff, Y: overlap.Y + yDiff}
+					overlap = h.Point{X: overlap.X + xDiff, Y: overlap.Y + yDiff}
 				}
 			}
 		}

@@ -1,7 +1,7 @@
 package days
 
 import (
-	"aoc/helpers"
+	h "aoc/helpers"
 	"fmt"
 	"path/filepath"
 	"strings"
@@ -15,10 +15,10 @@ type EquationBase struct {
 func parser(val string) EquationBase {
 	pieces := strings.Split(val, " ")
 	eb := EquationBase{
-		Result: helpers.ParseInt(strings.TrimSuffix(pieces[0], ":")),
+		Result: h.ParseInt(strings.TrimSuffix(pieces[0], ":")),
 	}
 	for _, num := range pieces[1:] {
-		eb.Operands = append(eb.Operands, helpers.ParseInt(num))
+		eb.Operands = append(eb.Operands, h.ParseInt(num))
 	}
 	return eb
 }
@@ -32,7 +32,7 @@ func EbTestPart1(result int, pieces []int) bool {
 }
 
 func d7Part1(path string) {
-	data, err := helpers.ParseFile(helpers.ParseFileOptions[EquationBase]{
+	data, err := h.ParseFile(h.ParseFileOptions[EquationBase]{
 		Path:   path,
 		Parser: parser,
 	})
@@ -56,11 +56,11 @@ func EbTestPart2(result int, pieces []int) bool {
 	}
 	return EbTestPart2(result, append([]int{pieces[0] + pieces[1]}, pieces[2:]...)) ||
 		EbTestPart2(result, append([]int{pieces[0] * pieces[1]}, pieces[2:]...)) ||
-		EbTestPart2(result, append([]int{helpers.ParseInt(fmt.Sprintf("%d%d", pieces[0], pieces[1]))}, pieces[2:]...))
+		EbTestPart2(result, append([]int{h.ParseInt(fmt.Sprintf("%d%d", pieces[0], pieces[1]))}, pieces[2:]...))
 }
 
 func d7Part2(path string) {
-	data, err := helpers.ParseFile(helpers.ParseFileOptions[EquationBase]{
+	data, err := h.ParseFile(h.ParseFileOptions[EquationBase]{
 		Path:   path,
 		Parser: parser,
 	})
