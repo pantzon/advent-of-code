@@ -1,0 +1,29 @@
+module(name = "advent-of-code-2025")
+
+bazel_dep(name = "bazel_env.bzl", version = "0.5.0")
+bazel_dep(name = "buildifier_prebuilt", version = "8.2.1")
+bazel_dep(name = "gazelle", version = "0.47.0")
+
+bazel_dep(name = "rules_rust", version = "0.67.0")
+rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
+rust.toolchain(
+    edition = "2024",
+    versions = [ "1.91.1" ],
+)
+crate = use_extension("@rules_rust//crate_universe:extensions.bzl", "crate")
+crate.from_cargo(
+    name = "crates",
+    cargo_lockfile = "//:Cargo.lock",
+    manifests = ["//:Cargo.toml"],
+)
+use_repo(crate, "crates")
+
+GAZELLE_RUST_COMMIT = "c6547e1f810c95f25a2ed99f94ee6ab9aba63976"
+GAZELLE_RUST_SHA256 = "sha256-jnCY1AyyVvirZP6oU26DSx8XAcYZdMm/QvOm5fB5btk="
+bazel_dep(name = "gazelle_rust", version = "0.1.0")
+archive_override(
+    module_name = "gazelle_rust",
+    integrity = GAZELLE_RUST_SHA256,
+    strip_prefix = "gazelle_rust-{}".format(GAZELLE_RUST_COMMIT),
+    url = "https://github.com/Calsign/gazelle_rust/archive/{}.zip".format(GAZELLE_RUST_COMMIT),
+)

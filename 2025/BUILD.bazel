@@ -1,0 +1,41 @@
+load("@bazel_env.bzl", "bazel_env")
+load("@gazelle//:def.bzl", "gazelle")
+load("@rules_rust//rust:defs.bzl", "rust_binary", "rust_library")
+
+# gazelle:rust_cargo_lockfile Cargo.lock
+# gazelle:rust_crates_prefix @crates//:
+
+gazelle(
+    name = "gazelle",
+    gazelle = "@gazelle_rust//:gazelle_bin",
+)
+
+bazel_env(
+    name = "env",
+    toolchains = {
+        "rust-analyzer": "@rules_rust//rust/toolchain:current_rust_analyzer_toolchain",
+    },
+    tools = {
+        "buildifier": "@buildifier_prebuilt//:buildifier",
+        "cargo": "@rules_rust//tools/upstream_wrapper:cargo",
+        "cargo-clippy": "@rules_rust//tools/upstream_wrapper:cargo_clippy",
+        "gazelle": "//:gazelle",
+        "rustc": "@rules_rust//tools/upstream_wrapper:rustc",
+        "rustfmt": "@rules_rust//tools/upstream_wrapper:rustfmt",
+    },
+)
+
+rust_binary(
+    name = "aoc2025_cli",
+    srcs = ["src/main.rs"],
+    deps = [
+        ":aoc2025",
+        "@crates//:clap",
+    ],
+    data = glob(["inputs/*"]),
+)
+
+rust_library(
+    name = "aoc2025",
+    srcs = glob(["src/*.rs"], exclude=["src/main.rs"]),
+)

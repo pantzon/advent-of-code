@@ -1,0 +1,5 @@
+{
+    "rust-analyzer.server.path": "${workspaceFolder}/2025/bazel-out/bazel_env-opt/bin/env/toolchains/rust-analyzer/bin/rust-analyzer",
+    "bazel.buildifierExecutable": "${workspaceFolder}/2025/bazel-out/bazel_env-opt/bin/env/bin/buildifier",
+    "bazel.buildifierFixOnFormat": true,
+}
