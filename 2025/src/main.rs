@@ -33,47 +33,46 @@ fn main() {
     let text = fs::read_to_string(input_file)
         .expect("Should have been able to read the file");
     
-    let d: Box<dyn DaySolution> = match args.day {
-        1 => Box::new(day_1::Day {
+    let d_opt: Option<Box<dyn DaySolution>> = match args.day {
+        1 => Some(Box::new(day_1::Day {
             data: text,
-        }),
-        2 => Box::new(day_2::Day{
+        })),
+        2 => Some(Box::new(day_2::Day{
             data: text,
-        }),
-        3 => Box::new(day_3::Day{
+        })),
+        3 => Some(Box::new(day_3::Day{
             data: text,
-        }),
-        4 => Box::new(day_4::Day{
+        })),
+        4 => Some(Box::new(day_4::Day{
             data: text,
-        }),
-        5 => Box::new(day_5::Day{
+        })),
+        5 => Some(Box::new(day_5::Day{
             data: text,
-        }),
-        6 => Box::new(day_6::Day{
+        })),
+        6 => Some(Box::new(day_6::Day{
             data: text,
-        }),
-        7 => Box::new(day_7::Day{
+        })),
+        7 => Some(Box::new(day_7::Day{
             data: text,
-        }),
-        8 => Box::new(day_8::Day{
+        })),
+        8 => Some(Box::new(day_8::Day{
             data: text,
-        }),
-        9 => Box::new(day_9::Day{
+        })),
+        9 => Some(Box::new(day_9::Day{
             data: text,
-        }),
-        10 => Box::new(day_10::Day{
+        })),
+        10 => Some(Box::new(day_10::Day{
             data: text,
-        }),
-        11 => Box::new(day_11::Day{
+        })),
+        11 => Some(Box::new(day_11::Day{
             data: text,
-        }),
-        12 => Box::new(day_12::Day{
+        })),
+        12 => Some(Box::new(day_12::Day{
             data: text,
-        }),
-        _ => Box::new(day_1::Day {
-            data: text,
-        }),
+        })),
+        _ => None,
     };
+    let d = d_opt.expect("Expected day between 1 and 12");
     println!("{}", d.part1());
     println!("{}", d.part2());
 }
