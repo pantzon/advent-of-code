@@ -38,4 +38,7 @@ rust_binary(
 rust_library(
     name = "aoc2025",
     srcs = glob(["src/*.rs"], exclude=["src/main.rs"]),
+    deps = [
+        "@crates//:fancy-regex",
+    ],
 )
